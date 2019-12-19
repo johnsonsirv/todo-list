@@ -1,0 +1,44 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "A simple TODO app built with JavaScript",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "watch-jest": "jest --watchAll --passWithNoTests",
+    "dev": "webpack-dev-server --open",
+    "build": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnsonsirv/todo-list.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnsonsirv/todo-list/issues"
+  },
+  "homepage": "https://github.com/johnsonsirv/todo-list#readme",
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.3.2",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.0.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "@babel/preset-env": "^7.7.6",
+    "jest": "^24.9.0"
+  },
+  "dependencies": {
+    "webpack": "^4.41.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.3.2",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.0.1"
+  }
+}
