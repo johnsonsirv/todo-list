@@ -15,19 +15,21 @@ const DisplayTodo = (() => {
 
   const fetchFromLocalStorage = (_todoName) => JSON.parse(localStorage.getItem(_todoName));
 
+  const render = (_element, _target) => {
+    const DOMTarget = _target;
+    DOMTarget.innerHTML = _element;
+  };
+
   const renderTodoListItems = (_todoList) => {
     const id = _todoList.getAttribute('data-id');
-    let html = '';
-    currentTodoListItems[id].forEach((listItem, index) => {
-      html = `${html}<div style="border: solid 1px;" class="todo-list-item" data-id="${index}">
-                <p>${listItem.todoItem.title}</p>
-                <p>${listItem.todoItem.note}</p>
-                <p>${listItem.todoItem.dueDate}</p>
-                Edit | Remove | Complete
+    const html = currentTodoListItems[id].map((listItem, index) => {
+      const { title, note, dueDate } = listItem.todoItem;
+      return `<div class="todo-list-item" data-id="${index}">
+                <p>${title}</p><p>${note}</p><p>${dueDate}</p>Edit | Remove | Complete
               </div>`;
     });
-    const TODOItemsSection = document.getElementById('todo-items');
-    TODOItemsSection.innerHTML = html;
+
+    render(html.join(''), document.getElementById('todo-items'));
   };
 
   const addTodoListsEventListener = (_elements) => {
@@ -39,17 +41,14 @@ const DisplayTodo = (() => {
   };
   const renderTodoLists = (_todoName) => {
     if (any(_todoName)) {
-      let html = '';
-      fetchFromLocalStorage(todoName).forEach(list => {
-        const currentList = Object.assign(Object.create(Todo.prototype), list);
-        currentTodoListItems[currentList.id] = currentList.items;
-        html = `${html}<div style="border: solid 1px;" class="todo-list" data-id="${currentList.id}">
-                  ${currentList.name}
-                </div>`;
+      const html = fetchFromLocalStorage(todoName).map(list => {
+        const { id, name, items } = Object.assign(Object.create(Todo.prototype), list);
+        currentTodoListItems[id] = items;
+        return `<div class="todo-list" data-id="${id}">${name}</div>`;
       });
-      const TODOSection = document.getElementById('todo');
-      TODOSection.innerHTML = html;
-      addTodoListsEventListener(TODOSection.children);
+
+      render(html.join(''), document.getElementById('todo'));
+      addTodoListsEventListener(document.getElementById('todo').children);
     }
   };
 
@@ -73,9 +72,7 @@ const DisplayTodo = (() => {
   const showInlineFormEditor = () => {
     document.getElementById('inline-list-form-section').removeAttribute('class');
     document.getElementById('inline-list-form-submit')
-      .addEventListener('click', e => {
-        // e.preventDefault();
-        // debugger;
+      .addEventListener('click', () => {
         submitFormParams();
       }, { once: true });
   };

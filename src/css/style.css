@@ -1,3 +1,9 @@
 .no-display {
   display: none;
 }
+.todo-list {
+  border: solid 1px;
+}
+.todo-list-item {
+  border: solid 1px;
+}
