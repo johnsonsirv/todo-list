@@ -2,9 +2,9 @@
 const shortid = require('shortid');
 
 class Todo {
-  constructor(name) {
+  constructor(value) {
     this._id = shortid.generate();
-    this._name = name;
+    this._name = value;
     this._items = [];
   }
 
@@ -12,17 +12,29 @@ class Todo {
     return this._id;
   }
 
+  set id(data) {
+    this._id = data;
+  }
+
   get name() {
     return this._name;
+  }
+
+  set name(data) {
+    this._name = data;
   }
 
   get items() {
     return this._items;
   }
 
-  set newItem(item = {}) {
+  set items(item = {}) {
     this._items.unshift(item);
   }
+
+  // set newItem(item = {}) {
+  //   this._items.unshift(item);
+  // }
 
   removeItem(index) {
     this._items.splice(index, index);
