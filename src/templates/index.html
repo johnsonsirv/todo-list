@@ -7,17 +7,29 @@
   <title>To Do</title>
 </head>
 <body>
-<div>
-  <button id="add-new-list">Add List</button>
-  <div id="inline-list-form-section" class="no-display">
-    <form action="" id="inline-list-form">
-      <input type="text" name="" id="inline-list-form-input">
-      <input type="button" value="Submit" id="inline-list-form-submit">
-    </form>
-  </div>
-  <div id="todo"></div>
-</div>
-<div id="todo-items"></div>
-  
+  <main>
+    <div class="left">
+        <button id="add-new-todo-list">Add List</button>
+        <div id="inline-todo-list-form-section" class="no-display">
+          <form action="" id="inline-list-form">
+            <input type="text" name="" id="inline-list-form-input">
+            <input type="button" value="Submit" id="add-todo">
+          </form>
+        </div>
+        <div id="todo"></div>
+      </div>
+      <div class="right">
+        <button id="add-new-todo-item">New Item</button>
+          <div id="inline-todo-item-form-section" class="no-display">
+            <form action="" id="inline-todo-item-form">
+              <input type="text" id="title">
+              <input type="text" id="note">
+              <input type="date" id="dueDate">
+              <input type="button" value="Submit" id="add-todo-item">
+            </form>
+          </div>
+        <div id="todo-items"></div>
+      </div>  
+  </main>
 </body>
 </html>

@@ -1,9 +1,26 @@
+main {
+  display: flex;
+ justify-content: center;
+}
 .no-display {
   display: none;
+}
+#todo {
+  height: 40vh;
+  width: 20vw;
+  border: solid 1px;
+}
+#todo-items {
+  height: auto;
+  width: 40vw;
+  border: solid 1px;
 }
 .todo-list {
   border: solid 1px;
 }
 .todo-list-item {
   border: solid 1px;
+}
+.remove-todo-list {
+  border-block-end-style: none;
 }

@@ -37,7 +37,7 @@ class Todo {
   // }
 
   removeItem(index) {
-    this._items.splice(index, index);
+    this._items.splice(index, 1);
   }
 }
 
