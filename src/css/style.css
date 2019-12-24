@@ -24,3 +24,9 @@ main {
 .remove-todo-list {
   border-block-end-style: none;
 }
+.todoitem-complete {
+  text-decoration-line: line-through;
+}
+.todoitem-priority {
+  color: #cf1111;
+}

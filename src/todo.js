@@ -32,12 +32,12 @@ class Todo {
     this._items.unshift(item);
   }
 
-  // set newItem(item = {}) {
-  //   this._items.unshift(item);
-  // }
-
   removeItem(index) {
     this._items.splice(index, 1);
+  }
+
+  static instanceOf(obj) {
+    return Object.assign(Object.create(Todo.prototype), obj);
   }
 }
 

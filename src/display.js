@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
 import Todo from './todo';
+import TodoItem from './todoItem';
 
 const DisplayTodo = (() => {
-  const myTodoList = [];
-  const todoName = 'myList';
+  let myTodoList;
+  let todoName;
   const currentTodoListItems = {};
   const any = (_name) => localStorage.getItem(_name).length > 0;
 
@@ -20,16 +21,48 @@ const DisplayTodo = (() => {
     DOMTarget.innerHTML = _element;
   };
 
-  const handleRenderTodoListItems = (_handle, _key) => {
+  const setTargetId = (_handle, _key) => {
+    const elem = _handle;
+    elem.value = _key;
+  };
+
+  const setFocusOnElement = (_handle) => _handle.click();
+
+  const addTodoItemsEventListener = (_target, _callback) => {
+    Array.from(_target).forEach((elem) => {
+      elem.addEventListener('click', () => {
+        _callback(
+          document.getElementById('todo-items-index').value,
+          elem.getAttribute('data-id'),
+        );
+      });
+    });
+  };
+
+  const handleRenderTodoListItems = (_handle, _key, _activeListIndex = null) => {
     const id = _key;
     const html = currentTodoListItems[id].map((listItem, index) => {
-      const { title, note, dueDate } = listItem.todoItem;
-      return `<div class="todo-list-item" data-id="${index}">
-                <p>${title}</p><p>${note}</p><p>${dueDate}</p>Edit | Remove | Complete
-              </div>`;
+      const {
+        title, note, dueDate, priority, completed,
+      } = listItem.todoItem;
+      const cssClass = (completed) ? 'todoitem-complete' : (priority) ? 'todoitem-priority' : '';
+      return (`<div class="todo-list-item" data-id="${index}">
+                <p class="${cssClass}">${title}</p>
+                <p class="${cssClass}">${note}</p>
+                <p class="${cssClass}">${dueDate}</p>
+                <button data-id="${index}" class="delete-todo-item">Remove</button>
+                <button data-id="${index}" class="complete-todo-item">Toggle Complete</button>
+                <button data-id="${index}" class="prioritize-todo-item">Toggle Priority</button>
+              </div>`);
     });
+
     _handle.addEventListener('click', () => {
+      setTargetId(document.getElementById('todo-items-index'), _activeListIndex);
       render(html.join(''), document.getElementById('todo-items'));
+      // eslint-disable-next-line no-use-before-define
+      addTodoItemsEventListener(document.getElementsByClassName('delete-todo-item'), handleDeleteTodoItem);
+      addTodoItemsEventListener(document.getElementsByClassName('complete-todo-item'), handleCompleteTodoItem);
+      addTodoItemsEventListener(document.getElementsByClassName('prioritize-todo-item'), handlePrioritizeTodoItem);
     });
   };
 
@@ -38,26 +71,36 @@ const DisplayTodo = (() => {
       _todoList.splice(objIndex, 1);
       persistToLocalStorage(_todoList);
       childList.parentElement.removeChild(childList);
+      setFocusOnElement(document.getElementById(`show-todo-items-${myTodoList[0].id}`));
     });
   };
 
   const addTodoListEventListeners = (_elements) => {
     Array.from(_elements).forEach((elem, index) => {
       const key = elem.getAttribute('id');
-      handleRenderTodoListItems(document.getElementById(`show-todo-items-${key}`), key);
-      handleDeleteTodoList(document.getElementById(`remove-todo-list-${index}`), index, elem, myTodoList);
+      handleRenderTodoListItems(
+        document.getElementById(`show-todo-items-${key}`),
+        key,
+        index,
+      );
+      handleDeleteTodoList(
+        document.getElementById(`remove-todo-list-${index}`),
+        index,
+        elem,
+        myTodoList,
+      );
     });
   };
 
-  const renderTodoLists = (_todoName) => {
+  const renderTodoLists = (_todoName = todoName) => {
     if (any(_todoName)) {
       const html = fetchFromLocalStorage(todoName).map((list, index) => {
-        const { id, name, items } = Object.assign(Object.create(Todo.prototype), list);
+        const { id, name, items } = Todo.instanceOf(list);
         currentTodoListItems[id] = items;
-        return `<div class="todo-list" id="${id}">
+        return (`<div class="todo-list" id="${id}">
           <span class="show-todo-items" id="show-todo-items-${id}" data-id="${id}">${name}</span>
           <button class="remove-todo-list" id="remove-todo-list-${index}">Delete</button>
-        </div>`;
+        </div>`);
       });
 
       render(html.join(''), document.getElementById('todo'));
@@ -65,21 +108,40 @@ const DisplayTodo = (() => {
     }
   };
 
-  const renderDefaultTodoListItems = (_todoItems) => {
-    const html = _todoItems.map((list, index) => {
-      const { title, note, dueDate } = list.todoItem;
-      return `<div class="todo-list-item" data-id="${index}">
-                <p>${title}</p><p>${note}</p><p>${dueDate}</p>Edit | Remove | Complete
-              </div>`;
-    });
-    render(html, document.getElementById('todo-items'));
+  const handleCompleteTodoItem = (objKey, itemKey) => {
+    const obj = Todo.instanceOf(myTodoList[objKey]);
+    obj.items[itemKey].todoItem.completed = !obj.items[itemKey].todoItem.completed;
+    persistToLocalStorage(myTodoList);
+    renderTodoLists();
+    setFocusOnElement(document.getElementById(`show-todo-items-${obj.id}`));
   };
 
-  const resetForm = () => {
-    document.getElementById('inline-list-form').reset();
-    document.getElementById('inline-list-form-input').value = '';
-    document.getElementById('inline-todo-list-form-section')
-      .setAttribute('class', 'no-display');
+  const handlePrioritizeTodoItem = (objKey, itemKey) => {
+    const obj = Todo.instanceOf(myTodoList[objKey]);
+    obj.items[itemKey].todoItem.priority = !obj.items[itemKey].todoItem.priority;
+    persistToLocalStorage(myTodoList);
+    renderTodoLists();
+    setFocusOnElement(document.getElementById(`show-todo-items-${obj.id}`));
+  };
+
+  const handleDeleteTodoItem = (objKey, _deleteKey) => {
+    const obj = Todo.instanceOf(myTodoList[objKey]);
+    obj.removeItem(_deleteKey);
+    persistToLocalStorage(myTodoList);
+    renderTodoLists();
+    setFocusOnElement(document.getElementById(`show-todo-items-${obj.id}`));
+  };
+
+  const resetForm = (_type = 'todo') => {
+    if (_type === 'todo') {
+      document.getElementById('inline-list-form').reset();
+      document.getElementById('inline-todo-list-form-section')
+        .setAttribute('class', 'no-display');
+    } else {
+      document.getElementById('inline-todo-item-form').reset();
+      document.getElementById('inline-todo-item-form-section')
+        .setAttribute('class', 'no-display');
+    }
   };
 
   const submitTodoListParams = () => {
@@ -89,11 +151,23 @@ const DisplayTodo = (() => {
     updateTodoList(newList);
     persistToLocalStorage(myTodoList);
     renderTodoLists(todoName);
+    setFocusOnElement(document.getElementById(`show-todo-items-${newList.id}`));
     resetForm();
   };
 
   const submitTodoListItemParams = () => {
-    
+    const newItem = TodoItem(
+      document.getElementById('title').value,
+      document.getElementById('note').value,
+      document.getElementById('dueDate').value,
+    );
+    const index = document.getElementById('todo-items-index').value;
+    const todo = Todo.instanceOf(myTodoList[index]);
+    todo.items = newItem;
+    persistToLocalStorage(myTodoList);
+    renderTodoLists();
+    setFocusOnElement(document.getElementById(`show-todo-items-${todo.id}`));
+    resetForm('todo-item');
   };
 
   const showInlineFormEditor = (_form, submitHandle, callback) => {
@@ -113,10 +187,8 @@ const DisplayTodo = (() => {
     });
   };
 
-  const initializeDOM = (_defaultList = {}) => {
-    updateTodoList(_defaultList);
-    persistToLocalStorage(myTodoList);
-
+  const initializeDOM = (_todoListName) => {
+    myTodoList = fetchFromLocalStorage(_todoListName);
     handleAddNewTodo(
       document.getElementById('add-new-todo-list'),
       document.getElementById('inline-todo-list-form-section'),
@@ -131,8 +203,8 @@ const DisplayTodo = (() => {
       submitTodoListItemParams,
     );
 
-    renderTodoLists(todoName);
-    renderDefaultTodoListItems(_defaultList.items);
+    todoName = _todoListName;
+    renderTodoLists(_todoListName);
   };
 
   return {
