@@ -7,26 +7,27 @@
   <title>To Do</title>
 </head>
 <body>
+  <header>Simple &#10003; Todo</header>
   <main>
     <div class="left">
-        <button id="add-new-todo-list">Add List</button>
+        <button title="Add New Todo List" class="btn-add" id="add-new-todo-list">+</button>
         <div id="inline-todo-list-form-section" class="no-display">
           <form action="" id="inline-list-form">
-            <input type="text" name="" id="inline-list-form-input">
-            <input type="button" value="Submit" id="add-todo">
+            <input class="text-input" type="text" placeholder="type todo list name" id="inline-list-form-input">
+            <input type="button" class="btn" value="Save" id="add-todo">
           </form>
         </div>
         <div id="todo"></div>
       </div>
       <div class="right">
-        <button id="add-new-todo-item">New Item</button>
-        <input type="text" id="todo-items-index">
+        <button class="btn-add" title="Add Item to List" id="add-new-todo-item">+</button>
+        <input type="hidden" id="todo-items-index">
           <div id="inline-todo-item-form-section" class="no-display">
             <form action="" id="inline-todo-item-form">
-              <input type="text" id="title">
-              <input type="text" id="note">
-              <input type="date" id="dueDate">
-              <input type="button" value="Submit" id="add-todo-item">
+              <input class="text-input" placeholder="type title" type="text" id="title">
+              <input class="text-input" placeholder="brief description" type="text" id="note">
+              <input class="text-input" type="date" id="dueDate">
+              <input type="button" class="btn" value="Save" id="add-todo-item">
             </form>
           </div>
         <div id="todo-items"></div>
