@@ -9,6 +9,7 @@ header {
   font-family:cursive;
   text-align: center;
   margin: .4em 0 .4em 0;
+  color: #3cb1ff;
 }
 main {
   display: flex;
@@ -48,13 +49,13 @@ main {
 }
 .item-info {
   font-size: 1.2em;
-  line-height: .6em;
+  line-height: .98em;
   width: 90%;
   padding: .5em;
   border: solid 0 1px 0 1px #d8c8c8;
 }
 .item-info .due-date {
-  color: #c5bdf1;
+  color: #3cb1ff;
 }
 .item-actions {
   font-size: 1.2em;

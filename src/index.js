@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-import { format, addYears } from 'date-fns';
 import Todo from './todo';
 import TodoItem from './todoItem';
 import DisplayTodo from './display';
