@@ -48,6 +48,7 @@ const DisplayTodo = (() => {
       const {
         title, note, dueDate, priority, completed,
       } = listItem.todoItem;
+      // eslint-disable-next-line no-nested-ternary
       const cssClass = (completed) ? 'todoitem-complete' : (priority) ? 'todoitem-priority' : '';
       return (`<div class="todo-list-item" data-id="${index}">
                 <div class="item-info">
@@ -157,10 +158,6 @@ const DisplayTodo = (() => {
       document.getElementById('note')
         .setAttribute('class', 'text-input');
     }
-  };
-
-  const closeFormPanel = (_target) => {
-    _target.setAttribute('class', 'no-display');
   };
 
   const showDOMWarning = (element) => {
