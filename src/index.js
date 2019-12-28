@@ -5,10 +5,7 @@ import DisplayTodo from './display';
 import './css/style.css';
 
 const todoName = 'myList';
-const any = (_name) => {
-  if (localStorage.getItem(_name) === null) return false;
-  return true;
-};
+
 
 const persistToLocalStorage = (_data, _todoName = todoName) => {
   localStorage.setItem(_todoName, JSON.stringify(_data));
@@ -20,7 +17,7 @@ const loadDefaultList = (_todoListName) => {
   const defaultList = new Todo('Default List');
   defaultList.items = shopping;
   defaultList.items = swimming;
-  if (!any(_todoListName)) {
+  if (!DisplayTodo.any(_todoListName)) {
     persistToLocalStorage([defaultList]);
   }
 };

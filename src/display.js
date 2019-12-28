@@ -6,7 +6,10 @@ const DisplayTodo = (() => {
   let myTodoList;
   let todoName;
   const currentTodoListItems = {};
-  const any = (_name) => localStorage.getItem(_name).length > 0;
+  const any = (_name) => {
+    if (localStorage.getItem(_name) === null) return false;
+    return true;
+  };
 
   const updateTodoList = (_data) => myTodoList.unshift(_data);
 
@@ -238,6 +241,7 @@ const DisplayTodo = (() => {
 
   return {
     initializeDOM,
+    any,
   };
 })();
 

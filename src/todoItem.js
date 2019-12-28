@@ -6,17 +6,8 @@ const TodoItem = (title, note, dueDate, priority = false, completed = false) => 
     priority,
     completed,
   };
-
-  const changePriority = () => {
-    todoItem.priority = !todoItem.priority;
-  };
-  const markComplete = () => {
-    this.completed = !this.completed;
-  };
   return {
     todoItem,
-    changePriority,
-    // markComplete,
   };
 };
 
