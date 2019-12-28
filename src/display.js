@@ -158,6 +158,11 @@ const DisplayTodo = (() => {
         .setAttribute('class', 'text-input');
     }
   };
+
+  const closeFormPanel = (_target) => {
+    _target.setAttribute('class', 'no-display');
+  };
+
   const showDOMWarning = (element) => {
     element.setAttribute('class', 'input-warning');
   };
@@ -202,19 +207,23 @@ const DisplayTodo = (() => {
     }
   };
 
-  const showInlineFormEditor = (_form, submitHandle, callback) => {
+  const showInlineFormEditor = (_form, submitHandle, callback, closeHandle) => {
     _form.removeAttribute('class');
     submitHandle.addEventListener('click', () => {
       callback();
     });
+    closeHandle.addEventListener('click', () => {
+      _form.setAttribute('class', 'no-display');
+    });
   };
 
-  const handleAddNewTodo = (_handle, _form, _submitHandle, callback) => {
+  const handleAddNewTodo = (_handle, _form, _submitHandle, callback, closeHandle) => {
     _handle.addEventListener('click', () => {
       showInlineFormEditor(
         _form,
         _submitHandle,
         callback,
+        closeHandle,
       );
     });
   };
@@ -226,6 +235,7 @@ const DisplayTodo = (() => {
       document.getElementById('inline-todo-list-form-section'),
       document.getElementById('add-todo'),
       submitTodoListParams,
+      document.getElementById('close-todolist-form-panel'),
     );
 
     handleAddNewTodo(
@@ -233,6 +243,7 @@ const DisplayTodo = (() => {
       document.getElementById('inline-todo-item-form-section'),
       document.getElementById('add-todo-item'),
       submitTodoListItemParams,
+      document.getElementById('close-todolist-item-form-panel'),
     );
 
     todoName = _todoListName;
