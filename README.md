@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c9424649-60c1-4860-aeb2-a1dfede32144/deploy-status)](https://app.netlify.com/sites/ntachi-osa/deploys)
+
 # Todo App
 This is a simple Todo App that demonstrates knowledge of ``es6 classes``, ``modules`` and ``jest`` for test javascript driven development.
 It contains basic features such as -
@@ -47,4 +49,4 @@ $ npm run build
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE.md) file for details.
