@@ -241,9 +241,9 @@ const DisplayTodo = (() => {
 
   const preFillEditForm = (objKey, itemKey) => {
     const obj = Todo.instanceOf(myTodoList[objKey]);
-    document.getElementById('edit-title').value = obj.items[itemKey].todoItem.title
-    document.getElementById('edit-note').value = obj.items[itemKey].todoItem.note
-    document.getElementById('edit-dueDate').value = obj.items[itemKey].todoItem.dueDate
+    document.getElementById('edit-title').value = obj.items[itemKey].todoItem.title;
+    document.getElementById('edit-note').value = obj.items[itemKey].todoItem.note;
+    document.getElementById('edit-dueDate').value = obj.items[itemKey].todoItem.dueDate;
   };
 
   const handleEditTodoItem = (objKey, itemKey) => {
