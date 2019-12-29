@@ -11,13 +11,13 @@ const DisplayTodo = (() => {
     return true;
   };
 
-  const updateTodoList = (_data) => myTodoList.unshift(_data);
+  const updateTodoList = _data => myTodoList.unshift(_data);
 
   const persistToLocalStorage = (_data, _todoName = todoName) => {
     localStorage.setItem(_todoName, JSON.stringify(_data));
   };
 
-  const fetchFromLocalStorage = (_todoName) => JSON.parse(localStorage.getItem(_todoName));
+  const fetchFromLocalStorage = _todoName => JSON.parse(localStorage.getItem(_todoName));
 
   const render = (_element, _target) => {
     const DOMTarget = _target;
@@ -29,7 +29,7 @@ const DisplayTodo = (() => {
     elem.value = _key;
   };
 
-  const setFocusOnElement = (_handle) => _handle.click();
+  const setFocusOnElement = _handle => _handle.click();
 
   const addTodoItemsEventListener = (_target, _callback) => {
     Array.from(_target).forEach((elem) => {
@@ -57,9 +57,10 @@ const DisplayTodo = (() => {
                 <p class="${cssClass} due-date">Due: ${dueDate}</p>
                 </div>
                 <div class="item-actions">
-                <button data-id="${index}" title="delete item" class="btn-danger delete-todo-item"> X </button>
+                <button data-id="${index}" title="edit details" class="edit-todo-item">&#9997;</button>
                 <button data-id="${index}" title="done" class="btn-add complete-todo-item">&#10003;</button>
                 <button data-id="${index}" title="priority" class="prioritize-todo-item">!!</button>
+                <button data-id="${index}" title="delete item" class="btn-danger delete-todo-item"> X </button>
                 </div>
               </div>`);
     });
@@ -67,6 +68,8 @@ const DisplayTodo = (() => {
     _handle.addEventListener('click', () => {
       setTargetId(document.getElementById('todo-items-index'), _activeListIndex);
       render(html.join(''), document.getElementById('todo-items'));
+      // eslint-disable-next-line no-use-before-define
+      addTodoItemsEventListener(document.getElementsByClassName('edit-todo-item'), handleEditTodoItem);
       // eslint-disable-next-line no-use-before-define
       addTodoItemsEventListener(document.getElementsByClassName('delete-todo-item'), handleDeleteTodoItem);
       // eslint-disable-next-line no-use-before-define
@@ -149,7 +152,7 @@ const DisplayTodo = (() => {
         .setAttribute('class', 'no-display');
       document.getElementById('inline-list-form-input')
         .setAttribute('class', 'text-input');
-    } else {
+    } else if (_type === 'todo-item') {
       document.getElementById('inline-todo-item-form').reset();
       document.getElementById('inline-todo-item-form-section')
         .setAttribute('class', 'no-display');
@@ -157,12 +160,18 @@ const DisplayTodo = (() => {
         .setAttribute('class', 'text-input');
       document.getElementById('note')
         .setAttribute('class', 'text-input');
+    } else { // Edit
+      document.getElementById('inline-edit-todo-item-form').reset();
+      document.getElementById('inline-edit-todo-item-form-section')
+        .setAttribute('class', 'no-display');
+      document.getElementById('edit-title')
+        .setAttribute('class', 'text-input');
+      document.getElementById('edit-note')
+        .setAttribute('class', 'text-input');
     }
   };
 
-  const showDOMWarning = (element) => {
-    element.setAttribute('class', 'input-warning');
-  };
+  const showDOMWarning = _element => _element.setAttribute('class', 'input-warning');
 
   const validInput = (input1 = null, input2 = null) => {
     if (input1.value === '') {
@@ -204,6 +213,22 @@ const DisplayTodo = (() => {
     }
   };
 
+  const editTodoItem = (objKey, itemKey) => {
+    const editTitle = document.getElementById('edit-title');
+    const editNote = document.getElementById('edit-note');
+    const editDueDate = document.getElementById('edit-dueDate').value;
+    if (validInput(editTitle, editNote)) {
+      const obj = Todo.instanceOf(myTodoList[objKey]);
+      obj.items[itemKey].todoItem.title = editTitle.value;
+      obj.items[itemKey].todoItem.note = editNote.value;
+      obj.items[itemKey].todoItem.dueDate = editDueDate;
+      persistToLocalStorage(myTodoList);
+      renderTodoLists();
+      setFocusOnElement(document.getElementById(`show-todo-items-${obj.id}`));
+      resetForm('edit-todo-item');
+    }
+  };
+
   const showInlineFormEditor = (_form, submitHandle, callback, closeHandle) => {
     _form.removeAttribute('class');
     submitHandle.addEventListener('click', () => {
@@ -212,6 +237,31 @@ const DisplayTodo = (() => {
     closeHandle.addEventListener('click', () => {
       _form.setAttribute('class', 'no-display');
     });
+  };
+
+  const preFillEditForm = (objKey, itemKey) => {
+    const obj = Todo.instanceOf(myTodoList[objKey]);
+    document.getElementById('edit-title').value = obj.items[itemKey].todoItem.title
+    document.getElementById('edit-note').value = obj.items[itemKey].todoItem.note
+    document.getElementById('edit-dueDate').value = obj.items[itemKey].todoItem.dueDate
+  };
+
+  const handleEditTodoItem = (objKey, itemKey) => {
+    document.getElementById('inline-edit-todo-item-form-section')
+      .removeAttribute('class');
+
+    preFillEditForm(objKey, itemKey);
+
+    document.getElementById('save-todo-item-edit')
+      .addEventListener('click', () => {
+        editTodoItem(objKey, itemKey);
+      });
+
+    document.getElementById('close-edit-todolist-item-form-panel')
+      .addEventListener('click', () => {
+        document.getElementById('inline-edit-todo-item-form-section')
+          .setAttribute('class', 'no-display');
+      });
   };
 
   const handleAddNewTodo = (_handle, _form, _submitHandle, callback, closeHandle) => {

@@ -112,3 +112,13 @@ main {
   outline-width: 4px;
   font-size: 1.2em;
 }
+#inline-edit-todo-item-form-section {
+  position: absolute;
+  height: auto;
+  width: 40vw;
+  border: solid .1em #d8c8c8;;
+  padding: .2em;
+  top: 20vh;
+  margin: auto;
+  background-color: #0a0909fb;
+}

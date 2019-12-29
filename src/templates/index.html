@@ -33,6 +33,15 @@
             </form>
           </div>
         <div id="todo-items"></div>
+        <div id="inline-edit-todo-item-form-section" class="no-display">
+            <button title="close" class="btn-danger" id="close-edit-todolist-item-form-panel">x</button>
+            <form action="" id="inline-edit-todo-item-form">
+              <p><input class="text-input" placeholder="type title" type="text" id="edit-title"></p>
+              <p><input class="text-input" placeholder="brief description" type="text" id="edit-note"></p>
+              <p><input class="text-input" type="date" id="edit-dueDate"></p>
+              <input title="Save Edit" type="button" class="btn" value="Save" id="save-todo-item-edit">
+            </form>
+        </div>
       </div>  
   </main>
 </body>
