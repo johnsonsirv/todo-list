@@ -7,5 +7,3 @@ files:
   ignore:
       - 'dist/*'
       - 'test/*'
-settings:
-  import/resolver: webpack
