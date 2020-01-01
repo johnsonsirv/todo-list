@@ -255,7 +255,7 @@ const DisplayTodo = (() => {
     document.getElementById('save-todo-item-edit')
       .addEventListener('click', () => {
         editTodoItem(objKey, itemKey);
-      });
+      }, { once: true });
 
     document.getElementById('close-edit-todolist-item-form-panel')
       .addEventListener('click', () => {
