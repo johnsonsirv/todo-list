@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/c9424649-60c1-4860-aeb2-a1dfede32144/deploy-status)](https://app.netlify.com/sites/ntachi-osa/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c9424649-60c1-4860-aeb2-a1dfede32144/deploy-status)](https://app.netlify.com/sites/todolist-spa-js/deploys)
 
 # JavaSript Todo List
 This is a simple [Todo List App](https://todolist-spa-js.netlify.com/) that demonstrates knowledge of ``es6 classes``, ``modules`` and ``jest`` for test javascript driven development.
