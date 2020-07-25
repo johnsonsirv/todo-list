@@ -1,14 +1,14 @@
 <h1 align="center">JavaScript Todo List App</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/johnsonsirv/local-restaurant-page#readme" target="_blank">
+  <a href="https://github.com/johnsonsirv/todo-list#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
-  <a href="https://github.com/johnsonsirv/local-restaurant-page/graphs/commit-activity" target="_blank">
+  <a href="https://github.com/johnsonsirv/todo-list/graphs/commit-activity" target="_blank">
     <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
   </a>
-  <a href="https://github.com/johnsonsirv/local-restaurant-page/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/johnsonsirv/local-restaurant-page" />
+  <a href="https://github.com/johnsonsirv/todo-list/blob/master/LICENSE" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/github/license/johnsonsirv/todo-list" />
   </a>
   <a href="https://twitter.com/vokeugo" target="_blank">
     <img alt="Twitter: vokeugo" src="https://img.shields.io/twitter/follow/vokeugo.svg?style=social" />
